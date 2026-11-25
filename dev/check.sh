@@ -74,6 +74,12 @@ check_sources() {
 	for i in $(grep -rhoE 'fa-[a-z][a-z-]+' src --include='*.php' --include='*.js' | sort -u); do
 		in_file "icon $i" web/css/themes/default.min.css "\\.$i[,{:]"
 	done
+	for f in logo.svg logo.png logo-header.svg favicon.png favicon.ico; do
+		in_file "white-label command: $f" bin/v-update-white-label-logo "web/images/custom/$f"
+	done
+	in_file "white-label is repeated after an upgrade" func/upgrade.sh 'v-update-white-label-logo'
+	in_file "logo on the login page" web/templates/pages/login/login.php '"/images/logo\.svg"'
+	in_file "tab icon" web/templates/includes/css.php '"/images/favicon\.png"'
 	# Every menu link must still lead to a page
 	for p in $(grep -oE '"/(list|add|edit)/[a-z/-]+/"' src/custom_scripts/hestia-sidebar/{menu,dashboard-data}.php -h | tr -d '"' | sort -u); do
 		if [ -f "$H/web$p/index.php" ] || [ -d "$H/web$p" ]; then ok "page $p"; else bad "page $p is gone"; fi
@@ -138,6 +144,20 @@ check_menu() {
 	is "user menu groups" "hosting tools" "$(grep -oE 'data-key="[a-z]+"' "$OUT" | cut -d'"' -f2 | xargs)"
 	req admin demo sidebar /list/web/ > /dev/null
 	is "menu when signed in as a user" "hosting tools" "$(grep -oE 'data-key="[a-z]+"' "$OUT" | cut -d'"' -f2 | xargs)"
+}
+
+check_logo() {
+	req admin "" sidebar /list/user/ > /dev/null
+	is "logo in the menu" yes "$(has 'src="/images/custom/logo-sidebar\.svg\?[0-9]+"')"
+	is "  loads" 200 "$(req admin "" sidebar /images/custom/logo-sidebar.svg)"
+	local f
+	for f in images/logo.svg images/logo.png images/logo-header.svg images/favicon.png favicon.ico; do
+		is "/$f is ours" "200 yes" "$(req nobody "" sidebar "/$f") $(cmp -s "$OUT" "src/images/${f##*/}" && echo yes)"
+	done
+	rm "$WORK/src/images/logo-sidebar.svg"
+	req admin "" sidebar /list/user/ > /dev/null
+	is "no wide logo: Hestia's header logo" yes "$(has 'src="/images/logo-header\.svg"')"
+	cp src/images/logo-sidebar.svg "$WORK/src/images/"
 }
 
 check_landing() {
@@ -213,6 +233,7 @@ check_version() {
 	if [ "$(has 'units-table')" = yes ]; then
 		check_pages
 		check_menu
+		check_logo
 		check_access
 		check_landing
 		check_failures

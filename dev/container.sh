@@ -29,6 +29,7 @@ export HESTIA='$H'
 CONF
 printf '#!/bin/bash\nexec "$@"\n' > /usr/bin/sudo && chmod +x /usr/bin/sudo
 export HESTIA=$H
+ln -s /src/addon/images $H/web/images/custom && $H/bin/v-update-white-label-logo
 
 # v-list-users reads panel accounts from /etc/passwd
 for u in $H/data/users/*; do

@@ -201,6 +201,10 @@ foreach ($menu as $key => &$group) {
 unset($group);
 
 $appName = hsb_opt("APP_NAME") ?: "Hestia Control Panel";
+// The wide logo is ours; without it (never installed, or reset in white-label settings) Hestia's header logo is used
+$logo = "/images/custom/logo-sidebar.svg";
+$logoTime = @filemtime($_SERVER["DOCUMENT_ROOT"] . $logo);
+$logo = $logoTime ? "$logo?$logoTime" : "/images/logo-header.svg";
 
 ob_start();
 ?>
@@ -210,7 +214,7 @@ ob_start();
 <div class="hsb-backdrop"></div>
 <aside class="hsb-sidebar" id="hsb">
 	<a href="<?= HSB_DASHBOARD ?>" class="hsb-logo" title="<?= hsb_e($appName) ?>">
-		<img src="/images/logo-header.svg" alt="<?= hsb_e($appName) ?>" height="32">
+		<img src="<?= hsb_e($logo) ?>" alt="<?= hsb_e($appName) ?>" height="36">
 	</a>
 	<div class="hsb-search">
 		<i class="fas fa-magnifying-glass"></i>

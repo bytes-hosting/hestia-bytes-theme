@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="138" height="40" viewBox="0 0 138 40"><title>BYTES</title>
+	<path fill="#21c8ee" fill-rule="evenodd" d="M0 2h9.9v11.7h-9.9zM1.8 3.8h6.3v8.1h-6.3zM10.8 2h9v5.4h-9zM12.6 3.8h5.4v1.8h-5.4zM10.8 14.6h5.4v9h-5.4zM12.6 16.4h1.8v5.4h-1.8zM0 27.2h11.7v10.8h-11.7zM1.8 29h8.1v7.2h-8.1zM22.5 27.2h9.9v10.8h-9.9zM24.3 29h6.3v7.2h-6.3z"/>
+	<path fill="#4acfb6" fill-rule="evenodd" d="M20.7 2h11.7v11.7h-11.7zM22.5 3.8h8.1v8.1h-8.1zM27 20.9h5.4v5.4h-5.4zM28.8 22.7h1.8v1.8h-1.8z"/>
+	<path fill="#38ccce" fill-rule="evenodd" d="M10.8 8.3h5.4v5.4h-5.4zM12.6 10.1h1.8v1.8h-1.8zM17.1 20.9h9v5.4h-9zM18.9 22.7h5.4v1.8h-5.4z"/>
+	<path fill="#7cd671" fill-rule="evenodd" d="M17.1 8.3h2.7v11.7h-2.7zM0 14.6h5.4v5.4h-5.4zM1.8 16.4h1.8v1.8h-1.8zM6.3 14.6h3.6v5.4h-3.6zM10.8 24.5h5.4v1.8h-5.4zM12.6 27.2h9v5.4h-9zM14.4 29h5.4v1.8h-5.4zM12.6 33.5h1.8v4.5h-1.8zM15.3 33.5h2.7v4.5h-2.7zM18.9 33.5h2.7v4.5h-2.7z"/>
+	<path fill="#b1de29" fill-rule="evenodd" d="M20.7 14.6h11.7v5.4h-11.7zM22.5 16.4h8.1v1.8h-8.1zM0 20.9h9.9v5.4h-9.9zM1.8 22.7h6.3v1.8h-6.3z"/>
+	<defs><linearGradient id="w" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="22"><stop stop-color="#f1f6fc"/><stop offset="1" stop-color="#a9c4e0"/></linearGradient></defs>
+	<g transform="translate(44 9) scale(1)">
+		<path fill="none" stroke="url(#w)" stroke-width="5" d="M2.5 2.5H9.6a4.1 4.1 0 0 1 0 8.2H2.5M2.5 10.7H10a4.4 4.4 0 0 1 0 8.8H2.5M2.5 0V22"/>
+		<path fill="url(#w)" d="M18 0h5.9l3.6 7.6L31.1 0H37L30 13.6V22h-5v-8.4zM38.5 0H54v5h-5.25v17h-5V5H38.5zM57 0h13v5h-8v3.6h7v4.8h-7V17h8v5H57z"/>
+		<path fill="none" stroke="url(#w)" stroke-width="5" d="M86.3 5.4C85 3.4 83 2.5 80.5 2.5c-3 0-5.2 1.4-5.2 3.9 0 2.7 2.3 3.5 5.3 4.3 3.2.9 5.7 1.8 5.7 4.7 0 2.7-2.4 4.1-5.5 4.1-2.9 0-5.2-1-6.7-3.2"/>
+	</g>
+</svg>
