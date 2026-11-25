@@ -1,0 +1,2 @@
+#!/bin/bash
+echo '{"sysinfo": {"HOSTNAME": "panel.example.com", "OS": "Ubuntu", "VERSION": "24.04", "ARCH": "x86_64", "HESTIA": "1.10.10", "RELEASE": "release", "UPTIME": "14400", "LOADAVERAGE": "0.20 / 0.15 / 0.10"}}'

@@ -1,0 +1,16 @@
+#!/bin/bash
+# DEV ONLY: a container has no systemd
+cat << 'JSON'
+{
+ "nginx": {"SYSTEM": "web server", "STATE": "running", "CPU": "0.4", "MEM": "48", "RTIME": "43200"},
+ "php8.3-fpm": {"SYSTEM": "php interpreter", "STATE": "running", "CPU": "1.2", "MEM": "212", "RTIME": "43200"},
+ "bind9": {"SYSTEM": "dns server", "STATE": "running", "CPU": "0.1", "MEM": "36", "RTIME": "43200"},
+ "exim4": {"SYSTEM": "mail server", "STATE": "running", "CPU": "0.0", "MEM": "22", "RTIME": "43200"},
+ "dovecot": {"SYSTEM": "pop/imap server", "STATE": "running", "CPU": "0.0", "MEM": "18", "RTIME": "43200"},
+ "spamd": {"SYSTEM": "spam filter", "STATE": "stopped", "CPU": "0", "MEM": "0", "RTIME": "0"},
+ "mariadb": {"SYSTEM": "database server", "STATE": "running", "CPU": "0.9", "MEM": "310", "RTIME": "43200"},
+ "cron": {"SYSTEM": "job scheduler", "STATE": "running", "CPU": "0.0", "MEM": "4", "RTIME": "43200"},
+ "iptables": {"SYSTEM": "firewall", "STATE": "running", "CPU": "0", "MEM": "0", "RTIME": "43200"},
+ "fail2ban": {"SYSTEM": "brute-force protection", "STATE": "running", "CPU": "0.2", "MEM": "30", "RTIME": "43200"}
+}
+JSON

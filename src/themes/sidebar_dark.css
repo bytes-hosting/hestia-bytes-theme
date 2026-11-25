@@ -1,0 +1,52 @@
+/* Theme "sidebar_dark". Only design tokens live here; the rules are in ui.css. */
+:root {
+	color-scheme: dark;
+
+	/* Sidebar */
+	--hsb-side-bg: #0d1220;
+	--hsb-side-line: #1e273b;
+	--hsb-side-text: #9aa7c0;
+	--hsb-side-strong: #edf1f9;
+	--hsb-side-hover: #18213a;
+	--hsb-side-active: #22386b;
+	--hsb-side-mark: #6aabff;
+
+	/* Surfaces */
+	--hsb-bg: #131927;
+	--hsb-surface: #1a2233;
+	--hsb-raised: #1f293d;
+	--hsb-line: #2a354b;
+	--hsb-line-strong: #3b4963;
+	--hsb-hover: #212c42;
+
+	/* Text and accent */
+	--hsb-text: #b5bfd2;
+	--hsb-muted: #8d99b0;
+	--hsb-strong: #eef2f9;
+	--hsb-accent: #7db2ff;
+	--hsb-accent-hover: #a5caff;
+	--hsb-accent-soft: #223457;
+	--hsb-on-accent: #0c1526;
+	--hsb-danger: #ff8089;
+	--hsb-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+	--hsb-shadow-lg: 0 10px 30px rgb(0 0 0 / 50%);
+
+	/* Icons */
+	--hsb-teal: #4fc3cf;
+	--hsb-purple: #b892f2;
+	--hsb-maroon: #f08ab2;
+	--hsb-red: #ff8089;
+	--hsb-green: #5fd08f;
+	--hsb-orange: #f2b45a;
+	--hsb-blue: #7db2ff;
+	--hsb-lightblue: #8fc9ff;
+
+	/* Dashboard */
+	--hsb-series: #4f8fe8;
+	--hsb-track: #24365a;
+	--hsb-warn: #f2b45a;
+	--hsb-warn-track: #43351f;
+	--hsb-crit: #ff8089;
+	--hsb-crit-track: #472a35;
+	--hsb-good: #5fd08f;
+}

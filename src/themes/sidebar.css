@@ -1,0 +1,3 @@
+/* Theme "sidebar" (light): uses the default tokens from ui.css.
+   Any file named sidebar_<name>.css next to this one becomes a variant: override the tokens
+   you need in :root, see sidebar_dark.css. */

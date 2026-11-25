@@ -1,0 +1,16 @@
+#!/bin/bash
+# DEV ONLY: a container has no rrdtool. Shape of `rrdtool xport --json`, with a few gaps.
+exec php -r '
+[$x, $service] = $argv; $step = 300; $n = 288; $start = intdiv(time(), $step) * $step - $n * $step; $rows = [];
+mt_srand(7);
+for ($i = 0; $i < $n; $i++) {
+	if ($i > 40 && $i < 44) { $rows[] = [null, null, null]; continue; }
+	$day = sin($i / 288 * 6.28 - 1.2);
+	$rows[] = $service === "mem"
+		? [1900 + 350 * $day + mt_rand(0, 60), 20, 1700 - 350 * $day]
+		: [max(5, 60 + 45 * $day + mt_rand(-15, 25)), 140]; // like Hestia: load average * 100
+}
+$legend = $service === "mem" ? ["Used", "Swap", "Free"] : ["Load", "Processes"];
+$rows[$n - 1] = array_fill(0, count($rows[$n - 1]), null); // the last reading is always empty
+echo json_encode(["meta" => ["start" => $start, "end" => $start + $n * $step, "step" => $step, "legend" => $legend], "data" => $rows]);
+' "$1" "$2"

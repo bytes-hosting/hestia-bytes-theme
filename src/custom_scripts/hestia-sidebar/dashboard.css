@@ -1,0 +1,398 @@
+/* Dashboard page. Colors come from the tokens in ui.css. */
+:where(:root) {
+	--hsb-series: #2459c4;
+	--hsb-track: #dde7f8;
+	--hsb-warn: #b45f06;
+	--hsb-warn-track: #fbe9cf;
+	--hsb-crit: #c22f3d;
+	--hsb-crit-track: #f9dde0;
+	--hsb-good: #1f8a4c;
+}
+
+.hsb-dash {
+	& ul,
+	& dl {
+		margin: 0;
+	}
+
+	& h2 {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 12px;
+		margin-bottom: 14px;
+		font-size: 16px;
+		font-weight: 650;
+
+		& a:not(.hsb-card-note) {
+			color: inherit;
+
+			&:hover {
+				color: var(--hsb-accent);
+			}
+		}
+	}
+}
+
+.hsb-card-note {
+	font-size: 13px;
+	font-weight: 400;
+	color: var(--hsb-muted);
+}
+
+a.hsb-card-note {
+	color: var(--hsb-accent);
+}
+
+.hsb-muted {
+	color: var(--hsb-muted);
+}
+
+.hsb-dash-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 24px 0 16px;
+
+	& h1 {
+		font-size: 22px;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+	}
+}
+
+.hsb-dash-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+/* Headline numbers */
+.hsb-tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.hsb-tile,
+.hsb-card {
+	padding: 18px 20px;
+	background: var(--hsb-surface);
+	border: 1px solid var(--hsb-line);
+	border-radius: var(--hsb-radius);
+	box-shadow: var(--hsb-shadow);
+}
+
+.hsb-tile {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	color: var(--hsb-muted);
+
+	&[href]:hover {
+		border-color: var(--hsb-accent);
+		color: var(--hsb-muted);
+	}
+}
+
+.hsb-tile-label {
+	font-size: 14px;
+
+	& .fas {
+		width: 18px;
+		margin-right: 6px;
+		color: var(--hsb-accent);
+	}
+}
+
+.hsb-tile-value {
+	font-size: 30px;
+	font-weight: 650;
+	line-height: 1.2;
+	color: var(--hsb-strong);
+}
+
+.hsb-tile-note {
+	min-height: 1.5em;
+	font-size: 13px;
+}
+
+/* Cards */
+.hsb-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	align-items: start;
+
+	& > div {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 16px;
+	}
+}
+
+@media (max-width: 1199px) {
+	.hsb-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+/* Meter list: name, figure and an aligned bar per row */
+.hsb-meter {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 6px 12px;
+	padding: 8px 0;
+	font-size: 14px;
+
+	& a {
+		color: var(--hsb-strong);
+
+		&:hover {
+			color: var(--hsb-accent);
+		}
+	}
+}
+
+.hsb-meter-label {
+	min-width: 0;
+	overflow-wrap: anywhere;
+	color: var(--hsb-strong);
+}
+
+.hsb-meter-state {
+	margin-left: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.hsb-meter-text {
+	color: var(--hsb-muted);
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+.hsb-meter-track {
+	grid-column: 1 / -1;
+	height: 8px;
+	overflow: hidden;
+	border-radius: 4px;
+	background: var(--hsb-track);
+
+	& span {
+		display: block;
+		height: 100%;
+		min-width: 2px;
+		border-radius: 4px;
+		background: var(--hsb-series);
+	}
+}
+
+/* Compared with each other, not with a limit: no track */
+.hsb-ranking .hsb-meter-track {
+	background: none;
+}
+
+.hsb-meter.is-warn {
+	& .hsb-meter-state {
+		color: var(--hsb-warn);
+	}
+
+	& .hsb-meter-track {
+		background: var(--hsb-warn-track);
+
+		& span {
+			background: var(--hsb-warn);
+		}
+	}
+}
+
+.hsb-meter.is-crit {
+	& .hsb-meter-state {
+		color: var(--hsb-crit);
+	}
+
+	& .hsb-meter-track {
+		background: var(--hsb-crit-track);
+
+		& span {
+			background: var(--hsb-crit);
+		}
+	}
+}
+
+/* Services and domains */
+.hsb-services li,
+.hsb-rows li {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 8px 0;
+	font-size: 14px;
+	border-top: 1px solid var(--hsb-line);
+
+	&:first-child {
+		border-top: 0;
+	}
+
+	& > :first-child {
+		min-width: 0;
+		overflow-wrap: anywhere;
+		color: var(--hsb-strong);
+	}
+}
+
+.hsb-rows li > :first-child {
+	flex: 1;
+}
+
+.hsb-services small {
+	flex: 1;
+	min-width: 0;
+	font-size: 13px;
+	color: var(--hsb-muted);
+}
+
+.hsb-state {
+	white-space: nowrap;
+	font-size: 13px;
+
+	& .fas {
+		margin-right: 6px;
+	}
+
+	&.is-ok {
+		color: var(--hsb-good);
+	}
+
+	&.is-off {
+		color: var(--hsb-muted);
+	}
+
+	&.is-bad {
+		color: var(--hsb-crit);
+		font-weight: 600;
+	}
+}
+
+.hsb-num {
+	min-width: 76px;
+	text-align: right;
+	color: var(--hsb-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.hsb-info div {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 8px 0;
+	font-size: 14px;
+	border-top: 1px solid var(--hsb-line);
+
+	&:first-child {
+		border-top: 0;
+	}
+}
+
+.hsb-info dt {
+	color: var(--hsb-muted);
+}
+
+.hsb-info dd {
+	margin: 0;
+	min-width: 0;
+	overflow-wrap: anywhere;
+	text-align: right;
+	color: var(--hsb-strong);
+}
+
+/* Line chart */
+.hsb-chart {
+	position: relative;
+	min-height: 200px;
+
+	& svg {
+		display: block;
+		width: 100%;
+		height: 200px;
+		overflow: visible;
+		outline-offset: 4px;
+	}
+
+	& text {
+		font-size: 12px;
+		fill: var(--hsb-muted);
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+.hsb-chart-grid {
+	stroke: var(--hsb-line);
+}
+
+.hsb-chart-line {
+	fill: none;
+	stroke: var(--hsb-series);
+	stroke-width: 2;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.hsb-chart-cross {
+	stroke: var(--hsb-line-strong);
+}
+
+.hsb-chart-dot {
+	fill: var(--hsb-series);
+	stroke: var(--hsb-surface);
+	stroke-width: 2;
+}
+
+.hsb-tip {
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	padding: 6px 10px;
+	font-size: 13px;
+	white-space: nowrap;
+	pointer-events: none;
+	color: var(--hsb-muted);
+	background: var(--hsb-surface);
+	border: 1px solid var(--hsb-line-strong);
+	border-radius: 8px;
+	box-shadow: var(--hsb-shadow-lg);
+
+	& b {
+		display: block;
+		color: var(--hsb-strong);
+	}
+}
+
+.hsb-chart-table {
+	margin-top: 12px;
+	font-size: 13px;
+
+	& summary {
+		color: var(--hsb-accent);
+		cursor: pointer;
+	}
+
+	& div {
+		max-height: 220px;
+		margin-top: 8px;
+		overflow: auto;
+	}
+
+	& th,
+	& td {
+		padding: 4px 8px 4px 0;
+		text-align: left;
+		font-variant-numeric: tabular-nums;
+		border-bottom: 1px solid var(--hsb-line);
+	}
+}
