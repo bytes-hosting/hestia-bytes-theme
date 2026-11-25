@@ -54,4 +54,4 @@ fi
 # The loader goes last, so the panel never sees a half-copied addon
 install -m 644 src/custom_scripts/hestia-sidebar.php "$HESTIA/web/js/custom_scripts/"
 echo "Logos: $logos."
-echo "Installed. Choose the theme 'sidebar' or 'sidebar_dark' in the panel settings."
+echo "Installed. Themes: 'sidebar' and 'sidebar_dark'."

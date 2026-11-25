@@ -54,4 +54,53 @@ list | diff /tmp/before - || fail "uninstall left files behind"
 pictures | diff /tmp/pictures - || fail "the stock logos did not return"
 grep -q "^THEME='default'" $H/conf/hestia.conf || fail "the server theme was not reset"
 grep -q "^THEME='default'" $H/data/users/demo/user.conf || fail "the user theme was not reset"
+
+# One-command install, from an archive like the one GitHub makes
+mkdir /pack && cp -r /repo/. /pack/hestia-bytes-theme-main && rm -rf /pack/*/.git /pack/*/.hestia /pack/*/.cache
+pack() { tar -czf /tmp/theme.tar.gz -C /pack hestia-bytes-theme-main; }
+get() { HESTIA_THEME_URL=file:///tmp/theme.tar.gz bash -s -- "$@" < /repo/get.sh > /tmp/get.log 2>&1; }
+theme() { grep '^THEME=' $H/conf/hestia.conf | cut -d"'" -f2; }
+O=/opt/hestia-bytes-theme
+pack
+get --theme nosuch && fail "an unknown theme was accepted"
+get --oops && fail "an unknown option was accepted"
+HESTIA_THEME_URL=file:///nosuch bash /repo/get.sh > /dev/null 2>&1 && fail "a failed download was not noticed"
+# The script itself cut short, at any line
+for n in $(seq 1 $(($(wc -l < /repo/get.sh) - 1))); do
+	head -n $n /repo/get.sh | HESTIA_THEME_URL=file:///tmp/theme.tar.gz bash > /dev/null 2>&1
+done
+mv /tmp/theme.tar.gz /tmp/whole.tar.gz
+for cut in 30000 5000 1000 100 20; do
+	head -c -$cut /tmp/whole.tar.gz > /tmp/theme.tar.gz
+	get && fail "an archive without its last $cut bytes was accepted"
+done
+list | diff /tmp/before - || fail "a refused one-command install left files in the panel"
+[ -z "$(ls -A /opt | grep hestia)" ] || fail "a refused one-command install left files in /opt"
+[ "$(theme)" = default ] || fail "a refused one-command install changed the theme"
+
+pack
+get || fail "one-command install failed: $(cat /tmp/get.log)"
+[ "$(theme)" = sidebar ] || fail "the first install did not set the default theme"
+[ "$(ls -A $O | xargs)" = "install.sh src uninstall.sh" ] || fail "$O should hold only what a server needs"
+diff -r /repo/src $O/src || fail "$O/src differs"
+cmp /repo/src/images/logo.svg $H/web/images/logo.svg || fail "one-command install: the logos are not applied"
+$H/bin/v-change-sys-config-value THEME dark
+get || fail "one-command update failed: $(cat /tmp/get.log)"
+[ "$(theme)" = dark ] || fail "an update changed the default theme"
+[ -x $O.previous/install.sh ] || fail "the previous version was not kept"
+get --theme sidebar_dark || fail "--theme failed: $(cat /tmp/get.log)"
+[ "$(theme)" = sidebar_dark ] || fail "--theme was ignored"
+[ "$(ls -A /opt | grep -c hestia)" = 2 ] || fail "extra folders in /opt: $(ls /opt)"
+find $O -type f -exec sha256sum {} + | sort > /tmp/opt
+echo '<?php $x = [;' > /pack/hestia-bytes-theme-main/src/custom_scripts/hestia-sidebar/lib.php && pack
+get && fail "a version that does not parse was installed"
+find $O -type f -exec sha256sum {} + | sort | diff /tmp/opt - || fail "a refused update touched $O"
+cp /repo/src/custom_scripts/hestia-sidebar/lib.php /pack/hestia-bytes-theme-main/src/custom_scripts/hestia-sidebar/ && pack
+$O/uninstall.sh > /dev/null 2>&1 || fail "uninstall.sh from $O failed"
+list | diff /tmp/before - || fail "uninstall from $O left files behind"
+get --no-logo --theme keep || fail "--no-logo failed: $(cat /tmp/get.log)"
+[ "$(theme)" = default ] || fail "--theme keep was ignored"
+pictures | diff /tmp/pictures - || fail "--no-logo changed the logos"
+rm -rf $O/src && mkdir $O/.git
+get && fail "a git checkout was overwritten"
 echo OK
